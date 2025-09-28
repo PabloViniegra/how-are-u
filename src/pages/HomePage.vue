@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
-import HeroSection from "@/components/home/HeroSection.vue";
-import FeaturesSection from "@/components/home/FeaturesSection.vue";
-import CTASection from "@/components/home/CTASection.vue";
+import HeroSection from "@/features/home/components/HeroSection.vue";
+import FeaturesSection from "@/features/home/components/FeaturesSection.vue";
+import CTASection from "@/features/home/components/CTASection.vue";
 
 const setupParallaxEffect = () => {
   window.addEventListener("scroll", () => {

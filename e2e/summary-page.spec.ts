@@ -321,7 +321,7 @@ test.describe('Summary Page (Shared Analysis)', () => {
     await page.goto('/summary/123');
 
     // Check page title
-    await expect(page).toHaveTitle(/Análisis Compartido/);
+    await expect(page).toHaveTitle(/Análisis de Atractivo Facial/);
   });
 
   test('should display call to action section', async ({ page }) => {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Background from "@/components/shared/Background.vue";
-import Footer from "@/components/shared/Footer.vue";
+import Background from "@/shared/components/Background.vue";
+import Footer from "@/shared/components/Footer.vue";
 import { Toaster } from "vue-sonner";
 import "vue-sonner/style.css";
 </script>

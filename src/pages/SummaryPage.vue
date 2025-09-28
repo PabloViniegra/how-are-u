@@ -3,11 +3,11 @@ import { ref, onMounted, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { ArrowLeft, Share, Download, RotateCcw } from "lucide-vue-next";
 import { gsap } from "gsap";
-import { useAnalysis } from "@/composables/useAnalysis";
-import { useGlobalStore } from "@/stores/global-store";
-import AnalysisResult from "@/components/analysis/AnalysisResult.vue";
-import Background from "@/components/shared/Background.vue";
-import type { Analysis } from "@/types";
+import { useAnalysis } from "@/features/beauty-analysis/composables/useAnalysis";
+import { useGlobalStore } from "@/shared/global-store";
+import AnalysisResult from "@/features/beauty-analysis/components/AnalysisResult.vue";
+import Background from "@/shared/components/Background.vue";
+import type { Analysis } from "@/features/beauty-analysis/types";
 
 const route = useRoute();
 const router = useRouter();
@@ -78,6 +78,10 @@ const downloadResult = () => {
 };
 
 const loadAnalysis = async () => {
+  // Add minimum loading duration for better UX and testing
+  const loadingStartTime = Date.now();
+  const minLoadingDuration = 500; // 500ms minimum
+
   try {
     isLoading.value = true;
     error.value = null;
@@ -91,13 +95,33 @@ const loadAnalysis = async () => {
     try {
       await getAnalysisById(id);
 
-      // Get the analysis from the mutation result
+      // If successful, use the API data
       if (fetchAnalysisByIdMutation.isSuccess.value && fetchAnalysisByIdMutation.data.value) {
         analysis.value = fetchAnalysisByIdMutation.data.value;
         return;
       }
-    } catch (apiError) {
-      console.warn('API not available, using mock data for development');
+
+      // If there was an error, check if it's a real HTTP error or network issue
+      if (fetchAnalysisByIdMutation.isError.value) {
+        const apiError = fetchAnalysisByIdMutation.error.value;
+        const errorMessage = apiError?.message || 'Error desconocido';
+
+        // For actual HTTP errors (404, 500), show error state
+        if (errorMessage.includes('HTTP error! status:')) {
+          throw new Error(errorMessage);
+        }
+
+        // For network errors, fall through to use mock data
+        console.warn('API not available, using mock data for development');
+      }
+    } catch (apiError: any) {
+      // For caught exceptions, check if it's a network error or real error
+      const errorMessage = apiError?.message || 'Error desconocido';
+      if (errorMessage.includes('HTTP error! status:')) {
+        throw apiError; // Re-throw HTTP errors to show error state
+      }
+      // For network errors, fall through to mock data
+      console.warn('Network error, using mock data for development');
     }
 
     // Fallback to mock data for development when API is not available
@@ -131,6 +155,14 @@ const loadAnalysis = async () => {
     console.error('Error loading analysis:', err);
     error.value = err?.message || 'Error al cargar el análisis';
   } finally {
+    // Ensure minimum loading duration has elapsed
+    const elapsedTime = Date.now() - loadingStartTime;
+    const remainingTime = Math.max(0, minLoadingDuration - elapsedTime);
+
+    if (remainingTime > 0) {
+      await new Promise(resolve => setTimeout(resolve, remainingTime));
+    }
+
     isLoading.value = false;
   }
 };

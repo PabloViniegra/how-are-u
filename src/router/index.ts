@@ -1,5 +1,5 @@
 import { createWebHistory, createRouter } from "vue-router";
-import { useGlobalStore } from "@/stores/global-store";
+import { useGlobalStore } from "@/shared/global-store";
 
 const HomePage = () => import("@/pages/HomePage.vue");
 const BeautyPage = () => import("@/pages/BeautyPage.vue");
@@ -32,7 +32,7 @@ const routes = [
     component: SummaryPage,
     name: "summary",
     meta: {
-      title: "Análisis Compartido",
+      title: "Análisis de Atractivo Facial",
       description: "Visualiza un análisis de belleza compartido",
       transition: "fade",
     },

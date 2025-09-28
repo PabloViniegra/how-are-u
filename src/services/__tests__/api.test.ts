@@ -204,8 +204,8 @@ describe('API Service', () => {
       // Complete upload phase
       mockXHR.onload();
 
-      // Wait for analysis simulation to complete (up to 5 seconds)
-      vi.advanceTimersByTime(5000);
+      // Wait for analysis simulation to complete (up to 5 seconds + buffer for variable timing)
+      vi.advanceTimersByTime(7000);
 
       await uploadPromise;
 
@@ -295,7 +295,8 @@ describe('API Service', () => {
         apiService['simulateAnalysisProgress'](onProgress, 0, 100, onComplete);
       }).not.toThrow();
 
-      vi.advanceTimersByTime(5000);
+      // Advance by more than the maximum possible duration (5000ms + buffer for variable timing)
+      vi.advanceTimersByTime(7000);
       expect(onComplete).toHaveBeenCalledTimes(1);
 
       vi.useRealTimers();

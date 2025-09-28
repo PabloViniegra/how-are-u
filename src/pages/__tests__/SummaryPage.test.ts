@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { createRouter, createWebHistory } from 'vue-router';
 import SummaryPage from '../SummaryPage.vue';
@@ -10,10 +10,10 @@ const mockGetAnalysisById = vi.fn();
 const mockFetchMutationState = {
   isSuccess: { value: false },
   isError: { value: false },
-  data: { value: null }
+  data: { value: null as Analysis | null }
 };
 
-vi.mock('@/composables/useAnalysis', () => ({
+vi.mock('@/features/beauty-analysis/composables/useAnalysis', () => ({
   useAnalysis: () => ({
     getAnalysisById: mockGetAnalysisById,
     fetchAnalysisByIdMutation: mockFetchMutationState
@@ -21,7 +21,7 @@ vi.mock('@/composables/useAnalysis', () => ({
 }));
 
 const mockAddNotification = vi.fn();
-vi.mock('@/stores/global-store', () => ({
+vi.mock('@/shared/global-store', () => ({
   useGlobalStore: () => ({
     addNotification: mockAddNotification
   })
@@ -35,7 +35,7 @@ vi.mock('gsap', () => ({
 }));
 
 // Mock components that might cause issues
-vi.mock('@/components/analysis/AnalysisResult.vue', () => ({
+vi.mock('@/features/beauty-analysis/components/AnalysisResult.vue', () => ({
   default: {
     name: 'AnalysisResult',
     template: '<div data-testid="analysis-result">Analysis Result Component</div>',
@@ -43,7 +43,7 @@ vi.mock('@/components/analysis/AnalysisResult.vue', () => ({
   }
 }));
 
-vi.mock('@/components/shared/Background.vue', () => ({
+vi.mock('@/shared/components/Background.vue', () => ({
   default: {
     name: 'Background',
     template: '<div data-testid="background">Background Component</div>'
@@ -83,7 +83,7 @@ describe('SummaryPage', () => {
     // Reset mock state
     mockFetchMutationState.isSuccess.value = false;
     mockFetchMutationState.isError.value = false;
-    mockFetchMutationState.data.value = null;
+    mockFetchMutationState.data.value = null as Analysis | null;
 
     // Setup router
     router = createRouter({
@@ -142,7 +142,7 @@ describe('SummaryPage', () => {
   it('displays analysis when loaded successfully', async () => {
     // Mock successful analysis loading
     mockFetchMutationState.isSuccess.value = true;
-    mockFetchMutationState.data.value = mockAnalysis;
+    mockFetchMutationState.data.value = mockAnalysis as Analysis;
 
     wrapper = mount(SummaryPage, {
       global: {
@@ -217,7 +217,7 @@ describe('SummaryPage', () => {
   it('displays call to action section for successful analysis', async () => {
     // Mock successful analysis loading
     mockFetchMutationState.isSuccess.value = true;
-    mockFetchMutationState.data.value = mockAnalysis;
+    mockFetchMutationState.data.value = mockAnalysis as Analysis;
 
     wrapper = mount(SummaryPage, {
       global: {
@@ -255,7 +255,7 @@ describe('SummaryPage', () => {
   it('shares analysis when share button is clicked', async () => {
     // Mock successful analysis loading
     mockFetchMutationState.isSuccess.value = true;
-    mockFetchMutationState.data.value = mockAnalysis;
+    mockFetchMutationState.data.value = mockAnalysis as Analysis;
 
     wrapper = mount(SummaryPage, {
       global: {
@@ -287,7 +287,7 @@ describe('SummaryPage', () => {
   it('shows download notification when download button is clicked', async () => {
     // Mock successful analysis loading
     mockFetchMutationState.isSuccess.value = true;
-    mockFetchMutationState.data.value = mockAnalysis;
+    mockFetchMutationState.data.value = mockAnalysis as Analysis;
 
     wrapper = mount(SummaryPage, {
       global: {

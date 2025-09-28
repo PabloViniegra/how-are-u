@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { createMemoryHistory, createRouter, Router } from 'vue-router'
+import { createMemoryHistory, createRouter, type Router } from 'vue-router'
 import { createPinia, setActivePinia } from 'pinia'
-import { useGlobalStore } from '@/stores/global-store'
+import { useGlobalStore } from '@/shared/global-store'
 
 // Mock the page components since they're lazy loaded
 vi.mock('@/pages/HomePage.vue', () => ({

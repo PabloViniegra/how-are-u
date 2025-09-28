@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '../HomePage.vue';
@@ -61,11 +61,11 @@ describe('HomePage', () => {
 
     it('should show main action buttons', () => {
       const buttons = wrapper.findAll('button');
-      const mainButton = buttons.find(btn => btn.text().includes('Analizar mi foto'));
-      const exampleButton = buttons.find(btn => btn.text().includes('Ver ejemplos'));
+      const mainButton = buttons.find((btn: any) => btn.text().includes('Analizar mi foto'));
+      const sharedAnalysisButton = buttons.find((btn: any) => btn.text().includes('Ver análisis compartido'));
 
       expect(mainButton).toBeTruthy();
-      expect(exampleButton).toBeTruthy();
+      expect(sharedAnalysisButton).toBeTruthy();
     });
   });
 
@@ -114,7 +114,7 @@ describe('HomePage', () => {
     });
 
     it('should show main CTA button', () => {
-      const ctaButton = wrapper.findAll('button').find(btn =>
+      const ctaButton = wrapper.findAll('button').find((btn: any) =>
         btn.text().includes('Comenzar análisis')
       );
       expect(ctaButton).toBeTruthy();
@@ -145,7 +145,7 @@ describe('HomePage', () => {
       const pushSpy = vi.spyOn(mockRouter, 'push');
 
       // Find the CTA button
-      const ctaButton = wrapper.findAll('button').find(btn =>
+      const ctaButton = wrapper.findAll('button').find((btn: any) =>
         btn.text().includes('Comenzar análisis')
       );
 
@@ -184,10 +184,10 @@ describe('HomePage', () => {
     it('should have hover effects on buttons', () => {
       const buttons = wrapper.findAll('button');
 
-      buttons.forEach(button => {
+      buttons.forEach((button: any) => {
         expect(button.classes()).toContain('transition-all');
         // Buttons may have different duration classes (duration-300 or duration-500)
-        const hasTransitionDuration = button.classes().some(cls =>
+        const hasTransitionDuration = button.classes().some((cls: any) =>
           cls.includes('duration-')
         );
         expect(hasTransitionDuration).toBe(true);
@@ -209,7 +209,7 @@ describe('HomePage', () => {
     it('should have descriptive text for features', () => {
       const featureCards = wrapper.findAll('.feature-card');
 
-      featureCards.forEach(card => {
+      featureCards.forEach((card: any) => {
         expect(card.text().length).toBeGreaterThan(0);
       });
     });
@@ -240,7 +240,7 @@ describe('HomePage', () => {
       // Mock router push to throw an error
       vi.spyOn(mockRouter, 'push').mockRejectedValue(new Error('Navigation failed'));
 
-      const button = wrapper.findAll('button').find(btn =>
+      const button = wrapper.findAll('button').find((btn: any) =>
         btn.text().includes('Analizar mi foto')
       );
 

@@ -18,9 +18,9 @@ test.describe('HomePage', () => {
     const analyzeButton = page.getByRole('button', { name: /Analizar mi foto/ });
     await expect(analyzeButton).toBeVisible();
 
-    // Check "Ver ejemplos" button
-    const examplesButton = page.getByRole('button', { name: /Ver ejemplos/ });
-    await expect(examplesButton).toBeVisible();
+    // Check "Ver análisis compartido" button
+    const sharedAnalysisButton = page.getByRole('button', { name: /Ver análisis compartido/ });
+    await expect(sharedAnalysisButton).toBeVisible();
   });
 
   test('should navigate to beauty analysis page when clicking analyze button', async ({ page }) => {
