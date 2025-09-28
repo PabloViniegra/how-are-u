@@ -6,7 +6,7 @@ interface Props {
   currentStep: "upload" | "processing" | "result";
 }
 
-const props = defineProps<Props>();
+defineProps<Props>();
 
 const progressStepsRef = ref<HTMLElement>();
 

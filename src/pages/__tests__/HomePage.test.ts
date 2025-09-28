@@ -132,7 +132,7 @@ describe('HomePage', () => {
       const pushSpy = vi.spyOn(mockRouter, 'push');
 
       // Find the main "Analizar mi foto" button
-      const mainButton = wrapper.findAll('button').find(btn =>
+      const mainButton = wrapper.findAll('button').find((btn: any) =>
         btn.text().includes('Analizar mi foto')
       );
 

@@ -194,7 +194,7 @@ describe('SummaryPage', () => {
     });
 
     const buttons = wrapper.findAll('button');
-    const backBtn = buttons.find(btn => btn.text().includes('Volver al inicio'));
+    const backBtn = buttons.find((btn: any) => btn.text().includes('Volver al inicio'));
     expect(backBtn).toBeDefined();
   });
 
@@ -210,7 +210,7 @@ describe('SummaryPage', () => {
     });
 
     const buttons = wrapper.findAll('button');
-    const newAnalysisButton = buttons.find(btn => btn.text().includes('Nuevo análisis'));
+    const newAnalysisButton = buttons.find((btn: any) => btn.text().includes('Nuevo análisis'));
     expect(newAnalysisButton).toBeDefined();
   });
 
@@ -272,7 +272,7 @@ describe('SummaryPage', () => {
     await new Promise(resolve => setTimeout(resolve, 10));
 
     const buttons = wrapper.findAll('button');
-    const shareButton = buttons.find(btn => btn.text().includes('Compartir'));
+    const shareButton = buttons.find((btn: any) => btn.text().includes('Compartir'));
 
     if (shareButton) {
       await shareButton.trigger('click');
@@ -304,7 +304,7 @@ describe('SummaryPage', () => {
     await new Promise(resolve => setTimeout(resolve, 10));
 
     const buttons = wrapper.findAll('button');
-    const downloadButton = buttons.find(btn => btn.text().includes('Descargar'));
+    const downloadButton = buttons.find((btn: any) => btn.text().includes('Descargar'));
 
     if (downloadButton) {
       await downloadButton.trigger('click');
@@ -336,7 +336,7 @@ describe('SummaryPage', () => {
     await new Promise(resolve => setTimeout(resolve, 10));
 
     const buttons = wrapper.findAll('button');
-    const retryButton = buttons.find(btn => btn.text().includes('Reintentar'));
+    const retryButton = buttons.find((btn: any) => btn.text().includes('Reintentar'));
 
     if (retryButton) {
       mockGetAnalysisById.mockClear();

@@ -8,7 +8,7 @@ interface Props {
   analysis: Analysis;
 }
 
-const props = defineProps<Props>();
+defineProps<Props>();
 
 const getFeaturePercentage = (value: number) => {
   return Math.round((value / 10) * 100);

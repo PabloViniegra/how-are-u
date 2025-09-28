@@ -259,7 +259,7 @@ describe('BeautyPage', () => {
 
       await wrapper.vm.$nextTick();
 
-      const newAnalysisButton = wrapper.findAll('button').find(btn =>
+      const newAnalysisButton = wrapper.findAll('button').find((btn: any) =>
         btn.text().includes('Nuevo análisis')
       );
 

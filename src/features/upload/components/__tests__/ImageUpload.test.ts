@@ -187,5 +187,6 @@ describe('ImageUpload Component', () => {
 
     // The component should handle the event
     expect(uploadArea.exists()).toBe(true);
+    expect(preventDefaultSpy).toHaveBeenCalled();
   });
 });
