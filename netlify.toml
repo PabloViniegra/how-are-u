@@ -3,7 +3,7 @@
   command = "pnpm build"
 
 [build.environment]
-  NODE_VERSION = "18"
+  NODE_VERSION = "20"
 
 # Redirects for SPA (Single Page Application)
 [[redirects]]
